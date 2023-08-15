@@ -2,9 +2,10 @@
   "name": "stockprice",
   "version": "1.0.0",
   "description": "stock price",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "dev:start": "node index.js"
+    "build": "tsc",
+    "dev:start": "yarn build && node src/index.js"
   },
   "repository": {
     "type": "git",
@@ -19,11 +20,14 @@
   "homepage": "https://github.com/Mt9555/stockprice#readme",
   "dependencies": {
     "axios": "^1.4.0",
-    "typescript": "^5.1.6"
+    "typescript": "^5.1.6",
+    "yargs": "^17.7.2"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
     "@types/node": "^20.5.0",
+    "@types/yargs": "^17.0.24",
+    "dotenv": "^16.3.1",
     "ts-node": "^10.9.1"
   }
 }
