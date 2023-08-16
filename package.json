@@ -1,7 +1,7 @@
 {
   "name": "stockprice",
   "version": "1.0.0",
-  "description": "get stock price for a given stock symbol",
+  "description": "Basic stock cli to get real-time stock price",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
@@ -20,6 +20,7 @@
   "homepage": "https://github.com/Mt9555/stockprice#readme",
   "dependencies": {
     "axios": "^1.4.0",
+    "chalk": "4",
     "typescript": "^5.1.6",
     "yargs": "^17.7.2"
   },

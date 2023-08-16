@@ -5,6 +5,7 @@ import { ApiResponse } from "types/twelveDataApiTypes";
 import fetchStockPriceFromTwelveData from "./api/twelveDataApiService";
 import yargs, { Arguments } from "yargs";
 import { hideBin } from "yargs/helpers";
+import chalk from "chalk";
 
 interface SymbolOptions {
   symbol: string;
@@ -36,12 +37,12 @@ const parser = yargs(hideBin(process.argv))
   const API_KEY = process.env.API_KEY;
 
   if (!API_KEY) throw new Error("API_KEY environment variable is missing.");
-  
+
   try {
     const argv = parser.parseSync() as Arguments<SymbolOptions>;
 
     if (!argv.symbol) {
-      console.error("Stock symbol is required.");
+      console.error(chalk.red("Stock symbol is required."));
       process.exit(1);
     }
 
@@ -57,20 +58,24 @@ const parser = yargs(hideBin(process.argv))
 
     // current stock price
     const currentPrice = stockData.values[0].close;
-    console.log(`Current Stock Price for ${stockSymbol}: ${currentPrice}`);
+    console.log(
+      chalk.bold.white.bgGreen(
+        `Current Stock Price for ${stockSymbol}: ${currentPrice}`
+      )
+    );
 
     // misc data
     const { currency, exchange, type } = stockData.meta;
-    console.log(`Currency: ${currency}`);
-    console.log(`Exchange: ${exchange}`);
-    console.log(`Type: ${type}`);
+    console.log(chalk.bold.yellow.bgBlack(`Currency: ${currency}`));
+    console.log(chalk.bold.yellow.bgBlack(`Exchange: ${exchange}`));
+    console.log(chalk.bold.yellow.bgBlack(`Type: ${type}`));
 
     // log entire data if --full flag is provided
     if (displayFull) {
-      console.log("Entire Data:", stockData);
+      console.log(chalk.bgGreen("Entire Data:"), stockData);
     }
   } catch (error) {
     const errorMessage = (error as Error).message;
-    console.error("Error:", errorMessage);
+    console.error(chalk.red("Error:"), chalk.bold(errorMessage));
   }
 })();
