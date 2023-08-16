@@ -35,10 +35,9 @@ const parser = yargs(hideBin(process.argv))
   const INTERVAL = "30min";
   const API_KEY = process.env.API_KEY;
 
-  if (!API_KEY) throw new Error("API_KEY environment var is missng.");
+  if (!API_KEY) throw new Error("API_KEY environment variable is missing.");
   
   try {
-    // TODO: 
     const argv = parser.parseSync() as Arguments<SymbolOptions>;
 
     if (!argv.symbol) {
