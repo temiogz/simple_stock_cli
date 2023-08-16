@@ -1,11 +1,11 @@
 {
   "name": "stockprice",
   "version": "1.0.0",
-  "description": "stock price",
-  "main": "src/index.js",
+  "description": "get stock price for a given stock symbol",
+  "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "dev:start": "yarn build && node src/index.js"
+    "start:dev": "yarn build && node dist/index.js"
   },
   "repository": {
     "type": "git",

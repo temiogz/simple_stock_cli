@@ -3,6 +3,7 @@
     "target": "es2017",
     "module": "commonjs",
     "strict": true,
+    "outDir": "dist",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
@@ -11,8 +12,8 @@
     "strictNullChecks": true,
     "noUnusedLocals": true,
     "baseUrl": "./src",
-    "allowSyntheticDefaultImports": true,
+    "allowSyntheticDefaultImports": true
   },
   "include": ["src/**/*.ts"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "dist"]
 }

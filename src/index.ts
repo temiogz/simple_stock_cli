@@ -1,23 +1,21 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-import { ApiResponse } from "types/twelveResponseTypes";
-import fetchStockPrice from "./api/getStockPrice";
-import yargs from "yargs";
+import { ApiResponse } from "types/twelveDataApiTypes";
+import fetchStockPriceFromTwelveData from "./api/twelveDataApiService";
+import yargs, { Arguments } from "yargs";
 import { hideBin } from "yargs/helpers";
 
-interface Argv {
-  symbol?: string;
+interface SymbolOptions {
+  symbol: string;
   full?: boolean;
-  _: string[];
-  $0: string;
 }
 
 const parser = yargs(hideBin(process.argv))
   .usage("Usage: $0 [command] [options]")
-  .command(
+  .command<SymbolOptions>(
     "symbol <symbol>",
-    "Fetch stack price for a specifc symbol",
+    "Fetch stock price for a specific symbol",
     (yargs) => {
       yargs
         .positional("symbol", {
@@ -25,7 +23,7 @@ const parser = yargs(hideBin(process.argv))
           type: "string",
         })
         .option("full", {
-          describe: "Dislay full data, powered by Twelvedata",
+          describe: "Display full data, powered by TwelveData",
           type: "boolean",
         });
     }
@@ -34,27 +32,31 @@ const parser = yargs(hideBin(process.argv))
   .alias("h", "help");
 
 (async () => {
-  const apiKey = process.env.API_KEY || "";
-  const argv = (await parser.argv) as Argv;
+  const INTERVAL = "30min";
+  const API_KEY = process.env.API_KEY;
 
-  if (!argv.symbol) {
-    console.error("Stock symbol is required.");
-    process.exit(1);
-  }
-
-  const stockSymbol = argv.symbol.toUpperCase();
-  const displayFull = argv.full ?? false;
-
-  const interval: string = "30min";
-
+  if (!API_KEY) throw new Error("API_KEY environment var is missng.");
+  
   try {
-    const stockData: ApiResponse = await fetchStockPrice(
+    // TODO: 
+    const argv = parser.parseSync() as Arguments<SymbolOptions>;
+
+    if (!argv.symbol) {
+      console.error("Stock symbol is required.");
+      process.exit(1);
+    }
+
+    /* args */
+    const stockSymbol = argv.symbol.toUpperCase();
+    const displayFull = argv.full || false;
+
+    const stockData: ApiResponse = await fetchStockPriceFromTwelveData(
       stockSymbol,
-      interval,
-      apiKey
+      INTERVAL,
+      API_KEY
     );
 
-    /* Display current stock price */
+    // current stock price
     const currentPrice = stockData.values[0].close;
     console.log(`Current Stock Price for ${stockSymbol}: ${currentPrice}`);
 
@@ -64,7 +66,7 @@ const parser = yargs(hideBin(process.argv))
     console.log(`Exchange: ${exchange}`);
     console.log(`Type: ${type}`);
 
-    // display entire data if --full flag is provided
+    // log entire data if --full flag is provided
     if (displayFull) {
       console.log("Entire Data:", stockData);
     }
