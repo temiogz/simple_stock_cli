@@ -1,5 +1,5 @@
 ### stockprice
-basic stockprice cli to get real time stock prices.
+A basic stockprice cli to get real-time stock prices.
 
 ### Installing
 ```bash
@@ -11,10 +11,11 @@ yarn run start:dev
 
 ### Usage
 Create an account on TwelveData to obtain your API key. [twelveData](https://twelvedata.com/docs#authentication).
-> Set environment variable - `export API_KEY=your-api-key` , you can also set env var for all your shell sessions.
+> Set environment variable - `export API_KEY=<api-key>` , you can also set it to persist accross your shell sessions.
+
+symlink the package "stockprice"
 
 ```bash
-symlink the package "stockprice"
 $ stockprice --symbol AAPL # Use the --full flag to get entire stock data (optional)
 ```
-> note: It's not designed to be published on NPMJS. Feel free to tailor to your own needs.
+> note: It's not designed to be published on NPMJS. Feel free to customize to your own needs.
