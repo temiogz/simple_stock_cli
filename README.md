@@ -10,8 +10,8 @@ yarn run start:dev
 ```
 
 ### Usage
-> Create an account on TwelveData to obtain your API key.  [twelveData](https://twelvedata.com/docs#authentication) 
-set environment variable - `export API_KEY=your-api-key`  you can also set env var for all your shell sessions.
+Create an account on TwelveData to obtain your API key. [twelveData](https://twelvedata.com/docs#authentication).
+> Set environment variable - `export API_KEY=your-api-key` , you can also set env var for all your shell sessions.
 
 ```bash
 symlink the package "stockprice"
