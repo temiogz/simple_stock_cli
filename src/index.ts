@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import { ApiResponse } from "types/twelveDataApiTypes";
-import fetchStockPriceFromTwelveData from "./api/twelveDataApiService";
+import fetchStockPriceFromTwelveData from "./api/twelveDataApiHandler";
 import yargs, { Arguments } from "yargs";
 import { hideBin } from "yargs/helpers";
 import chalk from "chalk";
@@ -33,46 +33,44 @@ const parser = yargs(hideBin(process.argv))
   .alias("h", "help");
 
 (async () => {
-  const INTERVAL = "30min";
-  const API_KEY = process.env.API_KEY;
+  const TIME_SERIES_INTERVAL = "30min";
+  const API_KEY = process.env.TWELVE_DATA_API_KEY;
 
-  if (!API_KEY) throw new Error("API_KEY environment variable is missing.");
+  if (!API_KEY) throw new Error("Missing API_KEY: Provide your TwelveData API key.");
 
   try {
-    const argv = parser.parseSync() as Arguments<SymbolOptions>;
+    const argv = await parser.parse() as Arguments<SymbolOptions>;
 
     if (!argv.symbol) {
       console.error(chalk.red("Stock symbol is required."));
       process.exit(1);
     }
 
-    /* args */
-    const stockSymbol = argv.symbol.toUpperCase();
-    const displayFull = argv.full || false;
+    const requestedStockSymbol  = argv.symbol;
+    const displayFullData = argv.full || false;
 
-    const stockData: ApiResponse = await fetchStockPriceFromTwelveData(
-      stockSymbol,
-      INTERVAL,
+    const fetchedStockPriceData: ApiResponse = await fetchStockPriceFromTwelveData(
+      requestedStockSymbol ,
+      TIME_SERIES_INTERVAL,
       API_KEY
     );
 
-    // current stock price
-    const currentPrice = stockData.values[0].close;
+    const currentMarketStockPrice = fetchedStockPriceData.values[0].close;
     console.log(
       chalk.bold.white.bgGreen(
-        `Current Stock Price for ${stockSymbol}: ${currentPrice}`
+        `Current Stock Price for ${requestedStockSymbol }: ${currentMarketStockPrice}`
       )
     );
 
-    // misc data
-    const { currency, exchange, type } = stockData.meta;
+    // misc
+    const { currency, exchange, type } = fetchedStockPriceData.meta;
     console.log(chalk.bold.yellow.bgBlack(`Currency: ${currency}`));
     console.log(chalk.bold.yellow.bgBlack(`Exchange: ${exchange}`));
     console.log(chalk.bold.yellow.bgBlack(`Type: ${type}`));
 
-    // log entire data if --full flag is provided
-    if (displayFull) {
-      console.log(chalk.bgGreen("Entire Data:"), stockData);
+    // display entire data if --full flag is provided
+    if (displayFullData) {
+      console.log(chalk.bgGreen("Complete Data Snapshot For Given Interval:"), fetchedStockPriceData);
     }
   } catch (error) {
     const errorMessage = (error as Error).message;

@@ -1,7 +1,7 @@
 {
   "name": "stockprice",
   "version": "1.0.0",
-  "description": "Basic stock cli to get real-time stock price",
+  "description": "CLI tool for fetching and displaying real-time stock price data",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
@@ -11,13 +11,7 @@
     "type": "git",
     "url": "git+https://github.com/Mt9555/stockprice.git"
   },
-  "keywords": [],
-  "author": "",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/Mt9555/stockprice/issues"
-  },
-  "homepage": "https://github.com/Mt9555/stockprice#readme",
   "dependencies": {
     "axios": "^1.4.0",
     "chalk": "4",

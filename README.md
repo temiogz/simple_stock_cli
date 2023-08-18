@@ -1,5 +1,5 @@
 ### stockprice
-A basic stockprice cli to get real-time stock prices.
+CLI for fetching real-time stock prices.
 
 ### Installing
 ```bash
@@ -11,7 +11,7 @@ yarn run start:dev
 
 ### Usage
 Create an account on TwelveData to obtain your API key. [twelveData](https://twelvedata.com/docs#authentication).
-> Set environment variable - `export API_KEY=<api-key>` , you can also set it to persist accross your shell sessions.
+> Set environment variable - `export TWELVE_DATA_API_KEY=<api-key>` , you can also set it to persist accross your shell sessions.
 
 symlink the package "stockprice"
 
