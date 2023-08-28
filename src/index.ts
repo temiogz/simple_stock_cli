@@ -43,7 +43,11 @@ const parser = yargs(hideBin(process.argv))
 
     const requestedStockSymbol  = argv.symbol;
     const displayFullData = argv.full || false;
-    const fetchedStockPriceData: ApiResponse = await fetchStockPriceFromTwelveData(requestedStockSymbol, TIME_SERIES_INTERVAL, API_KEY );
+    const fetchedStockPriceData: ApiResponse = await fetchStockPriceFromTwelveData(
+      requestedStockSymbol, 
+      TIME_SERIES_INTERVAL, 
+      API_KEY 
+    );
     
     const currentMarketStockPrice = fetchedStockPriceData.values[0].close;
     console.log(chalk.bold.white.bgGreen(`Current Stock Price for ${requestedStockSymbol }: ${currentMarketStockPrice}`));
@@ -53,7 +57,9 @@ const parser = yargs(hideBin(process.argv))
     console.log(chalk.bold.yellow.bgBlack(`Exchange: ${exchange}`));
     console.log(chalk.bold.yellow.bgBlack(`Type: ${type}`));
     // display entire data if --full flag is provided
-    if (displayFullData) console.log(chalk.bgGreen("Complete Data Snapshot For Given Interval:"), fetchedStockPriceData)
+    if (displayFullData) {
+      console.log(chalk.bgGreen("Complete Data Snapshot For Given Interval:"), fetchedStockPriceData);
+    }
   } catch (error) {
     const errorMessage = (error as Error).message;
     console.error("Error: ", errorMessage);
