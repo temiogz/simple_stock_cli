@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# replace <API_KEY> with your obtained key
+# rename the file to setvar.sh. Run ./setvar.sh, may need to give execute permission
+# this only set env variable for your current session
+
+apiKey=<API_KEY>
+export TWELVE_DATA_API_KEY=$apiKey
+echo "Twelve Data API key: ${apiKey}"

@@ -1,0 +1,6 @@
+# replace the <API_KEY> with your obtained key
+# rename the file to setvar.ps1
+
+$apiKey = "<API_KEY>"
+$env:TWELVE_DATA_API_KEY=$apiKey
+Write-Host "Twelve Data API key: $apiKey"
